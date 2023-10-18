@@ -10,16 +10,15 @@ from sqlalchemy import Integer, String, Text, ForeignKey
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relationship
-# Import your forms from the forms.py
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
-
+import os
 
 class Base(DeclarativeBase):
     pass
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'b7b5d16efca01bd112d3d5f590509bac39b731c8c54c69e282b8557a1c5334ac'
+app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 ckeditor = CKEditor(app)
 Bootstrap5(app)
 
@@ -27,7 +26,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 # CONNECT TO DB
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DB_URI")
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
@@ -239,4 +238,4 @@ def contact():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5002)
+    app.run(debug=False)
