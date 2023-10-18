@@ -100,7 +100,7 @@ def register():
         result = db.session.execute(db.select(User).where(User.email == register_form.email.data))
         user = result.scalar()
         if user is None:
-            hashed_salted_password = generate_password_hash(register_form.password.data, method='pbkdf2', salt_length=8)
+            hashed_salted_password = generate_password_hash(register_form.password.data, method='pbkdf2:sha256', salt_length=8)
             new_user = User(
                 email=register_form.email.data,
                 name=register_form.name.data,
