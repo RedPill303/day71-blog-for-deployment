@@ -50,7 +50,7 @@
               </div>
               <div class="commentText">
                 {{ comment.text|safe }}
-                <span class="date sub-text">{{ current_user.name }}</span>
+                <span class="date sub-text">{{ comment.commenter.name }}</span>
               </div>
             </li>
             {% endfor %}
